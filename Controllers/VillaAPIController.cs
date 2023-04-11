@@ -40,24 +40,24 @@ public class VillaAPIController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult<VillaDTO> CreateVilla([FromBody] VillaDTO villaDto)
+    public ActionResult<VillaDTO> CreateVilla([FromBody] VillaDTO villaDTO)
     {
-        if (villaDto == null)
+        if (villaDTO == null)
         {
-            return BadRequest(villaDto);
+            return BadRequest(villaDTO);
         }
 
-        if (villaDto.Id > 0)
+        if (villaDTO.Id > 0)
         {
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
-        villaDto.Id = VillaStore.villaList
+        villaDTO.Id = VillaStore.villaList
             .OrderByDescending(u => u.Id)
             .FirstOrDefault().Id + 1;
 
-        VillaStore.villaList.Add(villaDto);
+        VillaStore.villaList.Add(villaDTO);
 
-        return CreatedAtRoute("GetVilla", new { id = villaDto.Id }, villaDto);
+        return CreatedAtRoute("GetVilla", new { id = villaDTO.Id }, villaDTO);
     }
 }
