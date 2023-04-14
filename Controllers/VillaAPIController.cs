@@ -11,9 +11,9 @@ public class VillaAPIController : ControllerBase
 {
     private readonly ILogger<VillaAPIController> _logger;
 
-    public VillaAPIController(ILogger<VillaAPIController> _logger)
+    public VillaAPIController(ILogger<VillaAPIController> logger)
     {
-        this._logger = _logger;
+        this._logger = logger;
     }
 
     [HttpGet]
