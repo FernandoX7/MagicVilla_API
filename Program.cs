@@ -4,13 +4,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel
-    .Debug()
-    .WriteTo.File("log/villaLogs.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
+// Uncomment to replace the default console logging
+// Log.Logger = new LoggerConfiguration()
+//     .MinimumLevel
+//     .Debug()
+//     .WriteTo.File("log/villaLogs.txt", rollingInterval: RollingInterval.Day)
+//     .CreateLogger();
 
-builder.Host.UseSerilog();
+// builder.Host.UseSerilog();
 
 builder.Services
     .AddControllers(option => { option.ReturnHttpNotAcceptable = true; })
