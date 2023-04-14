@@ -6,7 +6,9 @@ public class Logging : ILogging
     {
         if (type == "error")
         {
+            Console.BackgroundColor = ConsoleColor.Red;
             Console.WriteLine("ERROR: " + message);
+            Console.BackgroundColor = ConsoleColor.Black;
         }
         else
         {
