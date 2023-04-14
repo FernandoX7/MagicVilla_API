@@ -1,4 +1,5 @@
 using MagicVilla_VillaAPI.Data;
+using MagicVilla_VillaAPI.Logging;
 using MagicVilla_VillaAPI.Models.Dto;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -9,18 +10,18 @@ namespace MagicVilla_VillaAPI.Controllers;
 [ApiController]
 public class VillaAPIController : ControllerBase
 {
-    private readonly ILogger<VillaAPIController> _logger;
+    private readonly ILogging _logger;
 
-    public VillaAPIController(ILogger<VillaAPIController> logger)
+    public VillaAPIController(ILogging logger)
     {
-        this._logger = logger;
+        _logger = logger;
     }
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<VillaDTO>> GetVillas()
     {
-        _logger.LogInformation("Getting all villas");
+        _logger.Log("Getting all villas", "");
         return Ok(VillaStore.villaList);
     }
 
@@ -32,7 +33,7 @@ public class VillaAPIController : ControllerBase
     {
         if (id == 0)
         {
-            _logger.LogError("Error getting villa with ID: " + id);
+            _logger.Log("Error getting villa with ID: " + id, "error");
             return BadRequest();
         }
 
@@ -43,7 +44,7 @@ public class VillaAPIController : ControllerBase
             return NotFound();
         }
 
-        _logger.LogInformation("Getting villa with ID:" + id);
+        _logger.Log("Getting villa with ID:" + id, "");
         return Ok(villa);
     }
 
@@ -75,7 +76,7 @@ public class VillaAPIController : ControllerBase
 
         VillaStore.villaList.Add(villaDTO);
 
-        _logger.LogInformation("Creating villa");
+        _logger.Log("Creating villa", "");
         return CreatedAtRoute("GetVilla", new { id = villaDTO.Id }, villaDTO);
     }
 
@@ -99,7 +100,7 @@ public class VillaAPIController : ControllerBase
 
         VillaStore.villaList.Remove(villa);
 
-        _logger.LogInformation("Deleting villa with ID: " + id);
+        _logger.Log("Deleting villa with ID: " + id, "");
         return NoContent();
     }
 
@@ -118,7 +119,7 @@ public class VillaAPIController : ControllerBase
         villa.Occupancy = villaDTO.Occupancy;
         villa.Sqft = villaDTO.Sqft;
 
-        _logger.LogInformation("Updating villa with ID: " + id);
+        _logger.Log("Updating villa with ID: " + id, "");
         return NoContent();
     }
 
@@ -146,7 +147,7 @@ public class VillaAPIController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        _logger.LogInformation("Partially updating villa with ID: " + id);
+        _logger.Log("Partially updating villa with ID: " + id, "");
         return NoContent();
     }
 }
