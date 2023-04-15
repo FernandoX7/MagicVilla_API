@@ -20,7 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
 });
 builder.Services
-    .AddControllers(option => { option.ReturnHttpNotAcceptable = true; })
+    .AddControllers(option => { option.ReturnHttpNotAcceptable = false; })
     .AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
